@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+
 class IssueResource extends Resource
 {
     protected static ?string $model = Issue::class;
@@ -23,8 +24,11 @@ class IssueResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\RichEditor::make('description'),
+                Forms\Components\DatePicker::make('expected_term'),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -32,14 +36,16 @@ class IssueResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description')->limit(50),
+                Tables\Columns\TextColumn::make('description')->limit(50)->html(),
                 Tables\Columns\TextColumn::make('expected_term'),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(), 
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(), 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -61,6 +67,7 @@ class IssueResource extends Resource
             'index' => Pages\ListIssues::route('/'),
             'create' => Pages\CreateIssue::route('/create'),
             'edit' => Pages\EditIssue::route('/{record}/edit'),
+            'view' => Pages\ViewIssue::route('/{record}'),
         ];
     }
 }
