@@ -21,7 +21,7 @@ class IssueFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'name' => $this->faker->name(),
+            'name' => $this->faker->text(5),
             'description' => $this->faker->sentence(20),
             'expected_term' => $this->faker->date(),
         ];
