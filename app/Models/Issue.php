@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'expected_term',
+    ];
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

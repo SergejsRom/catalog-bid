@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
             $table->string('description');
             $table->date('expected_term');
