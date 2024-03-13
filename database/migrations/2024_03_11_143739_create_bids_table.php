@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('start_date');
-            $table->integer('estimated_time');
+            $table->date('estimated_date');
             $table->integer('amount');
             $table->string('comment');
             $table->timestamps();

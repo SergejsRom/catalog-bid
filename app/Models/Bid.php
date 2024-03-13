@@ -15,7 +15,7 @@ class Bid extends Model
         'amount',
         'comment',
         'start_date',
-        'estimated_time',
+        'estimated_date',
     ];
 
     public function issues()
