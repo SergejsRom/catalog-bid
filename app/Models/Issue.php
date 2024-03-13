@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class Issue extends Model
 {
@@ -16,9 +18,9 @@ class Issue extends Model
         'expected_term',
     ];
 
-    public function bids()
+    public function bids(): BelongsToMany
     {
-        return $this->hasMany(Bid::class);
+        return $this->belongsToMany(Bid::class);
     }
 
     public function user()

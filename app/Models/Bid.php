@@ -15,12 +15,12 @@ class Bid extends Model
         'amount',
         'comment',
         'start_date',
-        'estimated_time',
+        'estimated_date',
     ];
 
-    public function issue()
+    public function issues()
     {
-        return $this->belongsTo(Issue::class);
+        return $this->belongsToMany(Issue::class);
     }
 
     public function user()
