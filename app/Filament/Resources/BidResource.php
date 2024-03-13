@@ -41,6 +41,7 @@ class BidResource extends Resource
 
     public static function table(Table $table): Table
     {
+        if (auth()->user()->hasRole('super_admin')) {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
@@ -57,14 +58,14 @@ class BidResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('comment')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -78,6 +79,46 @@ class BidResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+        }else{
+            return $table
+            ->query(Bid::where('user_id', '=', auth()->user()->id))
+            ->columns([
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('estimated_date')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('amount')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('comment')
+                    ->searchable(),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+        }
     }
 
     public static function getPages(): array

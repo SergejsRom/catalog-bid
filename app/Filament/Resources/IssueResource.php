@@ -22,13 +22,24 @@ class IssueResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
+        if (auth()->user()->hasRole('super_admin')) {
+            return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\RichEditor::make('description'),
                 Forms\Components\DatePicker::make('expected_term'),
             ])
             ->columns(1);
+        }else{
+            return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')->disabledOn('edit'),
+                Forms\Components\RichEditor::make('description')->disabledOn('edit'),
+                Forms\Components\DatePicker::make('expected_term')->disabledOn('edit'),
+            ])
+            ->columns(1);
+        }
+        
     }
 
     public static function table(Table $table): Table
@@ -44,7 +55,7 @@ class IssueResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(), 
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Make a bid'),
                 Tables\Actions\DeleteAction::make(), 
             ])
             ->bulkActions([

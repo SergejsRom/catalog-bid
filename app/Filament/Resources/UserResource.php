@@ -23,7 +23,13 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('email')->email(),
+                Forms\Components\Select::make('roles') 
+                    ->preload()
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->columnSpan('full'), 
             ]);
     }
 
@@ -31,7 +37,9 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('roles.name') 
             ])
             ->filters([
                 //
