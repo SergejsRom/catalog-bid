@@ -22,13 +22,24 @@ class IssueResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
+        if (auth()->user()->hasRole('super_admin')) {
+            return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\RichEditor::make('description'),
                 Forms\Components\DatePicker::make('expected_term'),
             ])
             ->columns(1);
+        }else{
+            return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')->disabledOn('edit'),
+                Forms\Components\RichEditor::make('description')->disabledOn('edit'),
+                Forms\Components\DatePicker::make('expected_term')->disabledOn('edit'),
+            ])
+            ->columns(1);
+        }
+        
     }
 
     public static function table(Table $table): Table
