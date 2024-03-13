@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\RichEditor;
 
 class IssueList extends Component implements HasForms, HasTable
 {
@@ -27,7 +28,7 @@ class IssueList extends Component implements HasForms, HasTable
         ->query(Issue::query())
         ->columns([
             Tables\Columns\TextColumn::make('name'),
-            Tables\Columns\TextColumn::make('description')->limit(50),
+            Tables\Columns\TextColumn::make('description')->limit(50)->html(),
             Tables\Columns\TextColumn::make('expected_term'),
         ])
         ->filters([
@@ -35,12 +36,16 @@ class IssueList extends Component implements HasForms, HasTable
         ])
         ->actions([
             // Tables\Actions\EditAction::make(),
+            Tables\Actions\ViewAction::make()
+            ->form([
+                TextInput::make('name'),
+                RichEditor::make('description'),
+                TextInput::make('expected_term'),
         ])
-        ->bulkActions([
-            // Tables\Actions\BulkActionGroup::make([
-            //     Tables\Actions\DeleteBulkAction::make(),
-            // ]),
-        ]);
+
+            ]);
+
+        // return $table;
     }
     public function render()
     {
