@@ -47,10 +47,10 @@ class BidsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->slideOver(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->slideOver(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -72,10 +72,10 @@ class BidsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->slideOver(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('Make a bid'),
+                Tables\Actions\EditAction::make()->label('Make a bid')->slideOver(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -84,29 +84,5 @@ class BidsRelationManager extends RelationManager
                 ]),
             ]);
         }
-
-        return $table
-            ->recordTitleAttribute('id')
-            ->columns([
-                Tables\Columns\TextColumn::make('start_date'),
-                Tables\Columns\TextColumn::make('estimated_date'),
-                Tables\Columns\TextColumn::make('amount'),
-                Tables\Columns\TextColumn::make('comment'),
-            ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
     }
 }
