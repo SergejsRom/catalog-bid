@@ -16,9 +16,9 @@ class Issue extends Model
         'expected_term',
     ];
 
-    public function bids()
+    public function bids(): BelongsToMany
     {
-        return $this->hasMany(Bid::class);
+        return $this->belongsToMany(Bid::class);
     }
 
     public function user()

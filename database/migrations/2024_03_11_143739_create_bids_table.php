@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('issue_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->date('start_date');
             $table->integer('estimated_time');

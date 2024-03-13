@@ -18,9 +18,9 @@ class Bid extends Model
         'estimated_time',
     ];
 
-    public function issue()
+    public function issues()
     {
-        return $this->belongsTo(Issue::class);
+        return $this->belongsToMany(Issue::class);
     }
 
     public function user()
