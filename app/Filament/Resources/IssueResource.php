@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
 
 
 class IssueResource extends Resource
@@ -72,6 +73,11 @@ class IssueResource extends Resource
                     ->action(function (array $data, \App\Models\Issue $record): void {
                         $record->bids()->create($data);
                         $record->save();
+
+                        Notification::make()
+                            ->title('Bid has been placed')
+                            ->success()
+                            ->send();
                     })
             ])
             ->bulkActions([
