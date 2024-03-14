@@ -10,7 +10,6 @@ class Bid extends Model
     use HasFactory;
 
     protected $fillable = [
-        'issue_id',
         'user_id',
         'amount',
         'comment',
@@ -20,7 +19,7 @@ class Bid extends Model
 
     public function issues()
     {
-        return $this->belongsToMany(Issue::class);
+        return $this->belongsToMany(Issue::class)->withPivot('bid_id');
     }
 
     public function user()

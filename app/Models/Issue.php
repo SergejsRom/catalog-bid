@@ -20,7 +20,7 @@ class Issue extends Model
 
     public function bids(): BelongsToMany
     {
-        return $this->belongsToMany(Bid::class);
+        return $this->belongsToMany(Bid::class)->withPivot('name');
     }
 
     public function user()
