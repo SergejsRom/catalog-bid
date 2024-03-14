@@ -54,9 +54,25 @@ class IssueResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(), 
-                Tables\Actions\EditAction::make()->label('Make a bid'),
-                Tables\Actions\DeleteAction::make(), 
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('New bid')->icon('heroicon-o-plus')->form([
+                    Forms\Components\DatePicker::make('start_date')
+                        ->required(),
+                    Forms\Components\DatePicker::make('estimated_date')
+                        ->required(),
+                    Forms\Components\TextInput::make('amount')
+                        ->required()
+                        ->numeric(),
+                    Forms\Components\TextInput::make('comment')
+                        ->required()
+                        ->maxLength(255),
+                ])
+                    ->action(function (array $data, \App\Models\Issue $record): void {
+                        $record->bids()->create($data);
+                        $record->save();
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
